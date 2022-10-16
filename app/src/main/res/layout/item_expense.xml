@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@drawable/custom_background"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:padding="5dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Travel"
+                android:textColor="@color/black"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:id="@+id/txtNameExpense"/>
+
+            <TextView
+                android:id="@+id/txtAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtNameExpense"
+                android:text="100.000"
+                android:gravity="end"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/black"
+                android:textSize="30dp"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="19/11/2022"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:layout_below="@id/txtAmount"
+                android:id="@+id/txtTimeOf"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>

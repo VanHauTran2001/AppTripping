@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Activity.MainActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/ln_actionbar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@color/teal_700">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtProfileTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="All Trips"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgDelete"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/delete" />
+        </RelativeLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/frame"
+            android:layout_below="@id/ln_actionbar"
+            android:layout_above="@id/liner1"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:orientation="horizontal"
+            android:id="@+id/liner1"
+            android:weightSum="4"
+            android:background="@color/white"
+            android:layout_alignParentBottom="true">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:background="@color/blue"
+                android:id="@+id/btnTrip"
+                android:layout_height="match_parent"
+                android:layout_weight="2">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Trip"
+                    android:textStyle="bold"
+                    android:id="@+id/txtTrip"
+                    android:textSize="25dp"
+                    android:textColor="@color/white"
+                    android:gravity="center"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/btnSearch"
+                android:background="#E1DFDF">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Search"
+                    android:textStyle="bold"
+                    android:id="@+id/txtSearch"
+                    android:textSize="20dp"
+                    android:gravity="center"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/btnUpload"
+                android:background="#E1DFDF">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Upload"
+                    android:textStyle="bold"
+                    android:id="@+id/txtUpload"
+                    android:textSize="20dp"
+                    android:gravity="center"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>
