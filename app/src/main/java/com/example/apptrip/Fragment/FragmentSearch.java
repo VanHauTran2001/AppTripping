@@ -34,40 +34,40 @@ public class FragmentSearch extends Fragment implements TripAdapter.IListTrip{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentSearchBinding.inflate(inflater,container,false);
-        sqLiteHelper = new SQLiteHelper(getContext(),"Database.sqlite",null,1);
-        tripArrayList = new ArrayList<>();
-        CustumSearch();
+        binding = FragmentSearchBinding.inflate(inflater,container,false); //khởi tạo layout của fragment
+        sqLiteHelper = new SQLiteHelper(getContext(),"Database.sqlite",null,1);//khởi tạo hàm gọi đến qlite
+        tripArrayList = new ArrayList<>();//khởi tạo list
+        CustumSearch();//xử lý sự kiện button search
         return binding.getRoot();
     }
 
     private void intitDataRecylerView() {
-        adapter = new TripAdapter(this);
-        binding.recyLerSearch.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.recyLerSearch.setAdapter(adapter);
+        adapter = new TripAdapter(this);//khởi tạo adapter
+        binding.recyLerSearch.setLayoutManager(new LinearLayoutManager(getContext()));//set recyclerview hiển thị theo chiều dọc
+        binding.recyLerSearch.setAdapter(adapter); //set adapter để hiển thị dữ liệu lên recyclerview
     }
 
     private void CustumSearch() {
-        binding.btnSearchTrip.setOnClickListener(new View.OnClickListener() {
+        binding.btnSearchTrip.setOnClickListener(new View.OnClickListener() {//bắt sự kiện khi người dùng click vào button search
             @Override
             public void onClick(View view) {
-                String nameSearch = binding.edtSearch.getText().toString().trim();
-                if (TextUtils.isEmpty(nameSearch)){
-                    Toast.makeText(getContext(),"Fill all required fields",Toast.LENGTH_SHORT).show();
-                }else {
+                String nameSearch = binding.edtSearch.getText().toString().trim();//Gán dữ liệu vào String khi người dùng nhập vào edittext
+                if (TextUtils.isEmpty(nameSearch)){ //Kiểm tra người dùng nhập dữ liệu chưa
+                    Toast.makeText(getContext(),"Fill all required fields",Toast.LENGTH_SHORT).show();//Nếu dữ liệu trông sẽ thông báo
+                }else {//ngược lại
                     //add to database
-                    tripArrayList.clear();
-                    Cursor cursor = sqLiteHelper.getData("SELECT * FROM Trips WHERE NameTrip = '"+nameSearch+ "' ");
+                    tripArrayList.clear();//xóa dữ liệu trong list
+                    Cursor cursor = sqLiteHelper.getData("SELECT * FROM Trips WHERE NameTrip = '"+nameSearch+ "' ");//hiển thị dữ liệu bảng Trip theo Id
                     while (cursor.moveToNext()){
-                        int idTrip = cursor.getInt(0);
+                        int idTrip = cursor.getInt(0);//lấy dữ liệu theo từng cột
                         String name = cursor.getString(1);
                         String date = cursor.getString(2);
                         String locate = cursor.getString(3);
                         String required = cursor.getString(4);
                         String description = cursor.getString(5);
-                        tripArrayList.add(new Trip(idTrip,name,date,locate,required,description));
+                        tripArrayList.add(new Trip(idTrip,name,date,locate,required,description));//gán dữ liệu vào list
                     }
-                    intitDataRecylerView();
+                    intitDataRecylerView();//gọi hàm để hiển thị dữ liệu lên recyclerview
                 }
             }
         });
@@ -76,10 +76,10 @@ public class FragmentSearch extends Fragment implements TripAdapter.IListTrip{
     @Override
     public int getCount() {
         return tripArrayList.size();
-    }
+    }//hàm trả về số lượng phần tử trong list
 
     @Override
-    public Trip getListTrip(int position) {
+    public Trip getListTrip(int position) {//hàm lấy giá trị trong list tại vị trí
         return tripArrayList.get(position);
     }
 

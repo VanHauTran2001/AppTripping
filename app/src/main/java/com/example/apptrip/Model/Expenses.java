@@ -7,6 +7,7 @@ public class Expenses {
     private String amount;
     private String timeOf;
 
+    //Khởi tạo có tham số
     public Expenses(int idExpenses, int idTrip, String type, String amount, String timeOf) {
         IdExpenses = idExpenses;
         this.idTrip = idTrip;
@@ -14,7 +15,7 @@ public class Expenses {
         this.amount = amount;
         this.timeOf = timeOf;
     }
-
+    //khởi tạo không tham số
     public Expenses() {
     }
 

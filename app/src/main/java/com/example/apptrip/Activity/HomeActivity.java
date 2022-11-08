@@ -31,8 +31,8 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_home);
-        onClickAddtoDatabase();
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_home);//Khởi tạo layout của activity
+        onClickAddtoDatabase();//Hàm xử lý chức năng của button add to database
     }
 
     private void onClickAddtoDatabase() {
@@ -40,19 +40,20 @@ public class HomeActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
+                //Khởi tạo và gán dữ liệu vào biến String khi người dùng nhập dữ liệu
                 String name = binding.edtNameTrip.getText().toString().trim();
                 String destination = binding.edtDestination.getText().toString().trim();
                 String date = binding.edtDate.getText().toString().trim();
                 String required = "";
-                if (binding.radioYes.isChecked()){
-                    required = "Yes";
-                }else if (binding.radioNo.isChecked()){
-                    required =  "No";
+                if (binding.radioYes.isChecked()){//Nếu người dùng click vào radioYes
+                    required = "Yes";//Gán required = "Yes"
+                }else if (binding.radioNo.isChecked()){//Ngược lại nếu người dùng click vào radioNo
+                    required =  "No";//Gán required = "No"
                 }
                 String description = binding.edtDescription.getText().toString().trim();
-                if (TextUtils.isEmpty(name) || TextUtils.isEmpty(description)||TextUtils.isEmpty(date)
+                if (TextUtils.isEmpty(name) || TextUtils.isEmpty(description)||TextUtils.isEmpty(date) //Kiểm tra người dùng nhập đủ dữ liệu chưa
                 ||TextUtils.isEmpty(destination)||TextUtils.isEmpty(required)){
-                    Dialog dialog = new Dialog(HomeActivity.this);
+                    Dialog dialog = new Dialog(HomeActivity.this);//Khởi tạo dialog (giải thích tương tự như class khác)
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.setCancelable(false);
                     dialog.setContentView(R.layout.dialog_confirm);
@@ -68,16 +69,16 @@ public class HomeActivity extends AppCompatActivity {
                     dialog.show();
                 }else {
                     //add to database
-                    sqLiteHelper = new SQLiteHelper(HomeActivity.this,"Database.sqlite",null,1);
-                    sqLiteHelper.QueryData("INSERT INTO Trips VALUES(null,'" + name + "','" +
+                    sqLiteHelper = new SQLiteHelper(HomeActivity.this,"Database.sqlite",null,1);//Khởi tạo hàm sqlite
+                    sqLiteHelper.QueryData("INSERT INTO Trips VALUES(null,'" + name + "','" + //Thêm dữ liệu vào bảng Trips trong database
                             date + "','" + destination + "','" + required + "','" + description + "')");
 
-                    Dialog dialog = new Dialog(HomeActivity.this);
+                    Dialog dialog = new Dialog(HomeActivity.this);//Khởi tạo dialog
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.setCancelable(false);
                     dialog.setContentView(R.layout.dialog_confirm);
                     TextView txtContent = (TextView) dialog.findViewById(R.id.tv_content);
-                    txtContent.setText(
+                    txtContent.setText( //gán dữ liệu vào text view content để hiện thị lên dialog
                                     "Name : " +name +"\n"+
                                     "Destination :" + destination+"\n"+
                                     "Data of the Trip :"+"\n"
@@ -90,10 +91,10 @@ public class HomeActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             dialog.dismiss();
-                            startActivity(new Intent(HomeActivity.this,MainActivity.class));
+                            startActivity(new Intent(HomeActivity.this,MainActivity.class)); //bắt đầu và khởi tạo intent
                         }
                     });
-                    dialog.show();
+                    dialog.show();//hiển thị dialog
                 }
             }
         });

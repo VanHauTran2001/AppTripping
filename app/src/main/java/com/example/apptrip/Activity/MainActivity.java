@@ -35,19 +35,20 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        initSQLite();
-        replaceFragment(new FragmentTrip());
-        onClickDeleteTrip();
-        onClickButtonMenu();
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);//Khởi tạo layout của activity
+        initSQLite(); //Xử lý chức năng của sqlite
+        replaceFragment(new FragmentTrip()); //Hiển thị FragmentTrip khi MainActivity đc gọi đến
+        onClickDeleteTrip(); //Xử lý button Delete Trip
+        onClickButtonMenu(); //Xử lý button menu
     }
 
     private void onClickButtonMenu() {
-        binding.btnTrip.setOnClickListener(new View.OnClickListener() {
+        binding.btnTrip.setOnClickListener(new View.OnClickListener() {//bắt sự kiện khi người dùng click vào button trip
             @SuppressLint("ResourceAsColor")
             @Override
             public void onClick(View view) {
-                replaceFragment(new FragmentTrip());
+                replaceFragment(new FragmentTrip()); //Hiển thị FragmentTrip
+                //set màu backgroundcolor của layout và màu của textview
                 binding.btnTrip.setBackgroundColor(Color.parseColor("#00BCD4"));
                 binding.btnUpload.setBackgroundColor(Color.parseColor("#E1DFDF"));
                 binding.btnSearch.setBackgroundColor(Color.parseColor("#E1DFDF"));
@@ -55,14 +56,15 @@ public class MainActivity extends AppCompatActivity{
                 binding.txtSearch.setTextColor(Color.parseColor("#FF000000"));
                 binding.txtUpload.setTextColor(Color.parseColor("#FF000000"));
                 binding.txtProfileTitle.setText("All Trips");
-                binding.imgDelete.setVisibility(View.VISIBLE);
+                binding.imgDelete.setVisibility(View.VISIBLE); //hiển icon delete
             }
         });
-        binding.btnSearch.setOnClickListener(new View.OnClickListener() {
+        binding.btnSearch.setOnClickListener(new View.OnClickListener() {//bắt sự kiện khi người dùng click vào button search
             @SuppressLint("ResourceAsColor")
             @Override
             public void onClick(View view) {
-                replaceFragment(new FragmentSearch());
+                replaceFragment(new FragmentSearch()); //Hiển thị FragmentSearch
+                //set màu backgroundcolor của layout và màu của textview
                 binding.btnSearch.setBackgroundColor(Color.parseColor("#00BCD4"));
                 binding.btnTrip.setBackgroundColor(Color.parseColor("#E1DFDF"));
                 binding.btnUpload.setBackgroundColor(Color.parseColor("#E1DFDF"));
@@ -70,14 +72,15 @@ public class MainActivity extends AppCompatActivity{
                 binding.txtTrip.setTextColor(Color.parseColor("#FF000000"));
                 binding.txtUpload.setTextColor(Color.parseColor("#FF000000"));
                 binding.txtProfileTitle.setText("Search");
-                binding.imgDelete.setVisibility(View.GONE);
+                binding.imgDelete.setVisibility(View.GONE);//ẩn icon delete
             }
         });
-        binding.btnUpload.setOnClickListener(new View.OnClickListener() {
+        binding.btnUpload.setOnClickListener(new View.OnClickListener() {//bắt sự kiện khi người dùng click vào button upload
             @SuppressLint("ResourceAsColor")
             @Override
             public void onClick(View view) {
-                replaceFragment(new FragmentUpload());
+                replaceFragment(new FragmentUpload()); //Hiển thị FragmentUpload
+                //set màu backgroundcolor của layout và màu của textview
                 binding.btnUpload.setBackgroundColor(Color.parseColor("#00BCD4"));
                 binding.btnTrip.setBackgroundColor(Color.parseColor("#E1DFDF"));
                 binding.btnSearch.setBackgroundColor(Color.parseColor("#E1DFDF"));
@@ -85,22 +88,22 @@ public class MainActivity extends AppCompatActivity{
                 binding.txtTrip.setTextColor(Color.parseColor("#FF000000"));
                 binding.txtSearch.setTextColor(Color.parseColor("#FF000000"));
                 binding.txtProfileTitle.setText("Upload to Cloud Service");
-                binding.imgDelete.setVisibility(View.GONE);
+                binding.imgDelete.setVisibility(View.GONE); //ẩn icon delete
             }
         });
     }
 
-    private void replaceFragment(Fragment fragment){
+    private void replaceFragment(Fragment fragment){ //Khởi tạo 1 fragment mới
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.frame,fragment,Fragment.class.getName())
                 .commit();
     }
     @SuppressLint("NotifyDataSetChanged")
     private void onClickDeleteTrip() {
-        binding.imgDelete.setOnClickListener(new View.OnClickListener() {
+        binding.imgDelete.setOnClickListener(new View.OnClickListener() {//bắt sự kiện khi người dùng click vào icon delete
             @Override
             public void onClick(View view) {
-                Dialog dialog = new Dialog(MainActivity.this);
+                Dialog dialog = new Dialog(MainActivity.this); //Khởi tạo dialog (giải thích tương tự như class khác)
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setCancelable(false);
                 dialog.setContentView(R.layout.dialog_delete);
@@ -117,13 +120,13 @@ public class MainActivity extends AppCompatActivity{
                 btnOk.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        sqLiteHelper.QueryData("DELETE FROM Trips");
-                        replaceFragment(new FragmentTrip());
-                        Toast.makeText(MainActivity.this,"Delete Success !!!",Toast.LENGTH_LONG).show();
-                        dialog.dismiss();
+                        sqLiteHelper.QueryData("DELETE FROM Trips"); //Xóa toàn bộ dữ liệu của bảng Trips trong database
+                        replaceFragment(new FragmentTrip()); //Hiển thị FragmentTrip
+                        Toast.makeText(MainActivity.this,"Delete Success !!!",Toast.LENGTH_LONG).show();//Hiển thị toast thông báo xóa thành công
+                        dialog.dismiss(); //ẩn dialog
                     }
                 });
-                dialog.show();
+                dialog.show(); //hiển thị dialog
             }
         });
     }
@@ -132,15 +135,15 @@ public class MainActivity extends AppCompatActivity{
 
 
 
-    private void initSQLite() {
-        sqLiteHelper = new SQLiteHelper(MainActivity.this,"Database.sqlite",null,1);
-        sqLiteHelper.QueryData("CREATE TABLE IF NOT EXISTS Trips(Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+    private void initSQLite() {//Khi gọi đến Mainactivity nó sẽ tạo bảng trong sqlite
+        sqLiteHelper = new SQLiteHelper(MainActivity.this,"Database.sqlite",null,1);//khởi tạo sqlite
+        sqLiteHelper.QueryData("CREATE TABLE IF NOT EXISTS Trips(Id INTEGER PRIMARY KEY AUTOINCREMENT," +//tạo bảng Trips trong database
                 "NameTrip NVARCHAR(100)," +
                 "DateTrip NVARCHAR(100)," +
                 "LocateTrip NVARCHAR(100)," +
                 "RequiredTrip NVARCHAR(50)," +
                 "DescriptionTrip VARCHAR(100))");
-        sqLiteHelper.QueryData("CREATE TABLE IF NOT EXISTS Expense(Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+        sqLiteHelper.QueryData("CREATE TABLE IF NOT EXISTS Expense(Id INTEGER PRIMARY KEY AUTOINCREMENT," +//tạo bảng Expense trong database
                 "IdTrip INTEGER," +
                 "Type NVARCHAR(100)," +
                 "Amount NVARCHAR(100)," +

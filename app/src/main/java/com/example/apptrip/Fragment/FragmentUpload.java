@@ -51,7 +51,7 @@ public class FragmentUpload extends Fragment {
 
     private void postDataUsingVolley(String upLoadRespone,String userID , String number , String names , String message) {
         // url to post our data
-        String url = "https://cwservice1786.herokuapp.com";
+        String url = "https://cwservice1786.herokuapp.com/sendPayLoad";
         //String url = "https://reqres.in/api/users";
         binding.idLoadingPB.setVisibility(View.VISIBLE);
         // creating a new variable for our request queue
@@ -63,7 +63,7 @@ public class FragmentUpload extends Fragment {
             @Override
             public void onResponse(String response) {
                 binding.idLoadingPB.setVisibility(View.GONE);
-                Toast.makeText(getContext(), "Data added to API", Toast.LENGTH_SHORT).show();
+
                 try {
                     // on below line we are parsing the response
                     // to json object to extract data from it.
@@ -84,6 +84,7 @@ public class FragmentUpload extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                Toast.makeText(getContext(), "Data added to API", Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -117,7 +118,7 @@ public class FragmentUpload extends Fragment {
         queue.add(request);
     }
 
-    private void showDialog(String message){
+    private void showDialog(String message){//khởi tạo dialog
         Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);

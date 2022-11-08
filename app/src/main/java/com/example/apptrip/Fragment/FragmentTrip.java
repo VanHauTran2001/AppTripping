@@ -30,67 +30,67 @@ public class FragmentTrip extends Fragment implements TripAdapter.IListTrip{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentTripBinding.inflate(inflater,container,false);
-        tripArrayList = new ArrayList<>();
-        sqLiteHelper = new SQLiteHelper(getContext(),"Database.sqlite",null,1);
-        getDataTrip();
-        onClickAdd();
-        initRecyler();
-        checkThongBao();
+        binding = FragmentTripBinding.inflate(inflater,container,false);//khởi tạo layout
+        tripArrayList = new ArrayList<>(); //khởi tạo list
+        sqLiteHelper = new SQLiteHelper(getContext(),"Database.sqlite",null,1); //khởi tạo dữ liệu sqlite
+        getDataTrip(); //hàm hiển thị dữ liệu từ sqlite
+        onClickAdd(); //hàm xử lý sự kiện khi người dùng click vào button add
+        initRecyler(); //hàm hiển thị dữ liệu lên recyclerview
+        checkThongBao(); //hàm kiểm tra và hiển thị thông báo
         return binding.getRoot();
     }
 
     private void getDataTrip() {
-        tripArrayList.clear();
-        Cursor cursor = sqLiteHelper.getData("SELECT * FROM Trips");
+        tripArrayList.clear(); //xóa dữ liệu của list
+        Cursor cursor = sqLiteHelper.getData("SELECT * FROM Trips"); //hiển thị dữ liệu bảng Trips trong database
         while (cursor.moveToNext()){
-            idTrip = cursor.getInt(0);
+            idTrip = cursor.getInt(0); //lấy dữ liệu từng cột
             String name = cursor.getString(1);
             String date = cursor.getString(2);
             String locate = cursor.getString(3);
             String required = cursor.getString(4);
             String description = cursor.getString(5);
-            tripArrayList.add(new Trip(idTrip,name,date,locate,required,description));
+            tripArrayList.add(new Trip(idTrip,name,date,locate,required,description));//gán dữ liệu vào list
         }
     }
     private void onClickAdd() {
-        binding.btnAdd.setOnClickListener(new View.OnClickListener() {
+        binding.btnAdd.setOnClickListener(new View.OnClickListener() {//xử lý sự kiện khi người dùng click vào button add
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), HomeActivity.class));
+                startActivity(new Intent(getContext(), HomeActivity.class));//chuyển màn hình từ Fragment này sang HomeActivity
             }
         });
     }
 
-    private void checkThongBao() {
-        if (tripArrayList.size()==0){
-            binding.txtThongBao.setVisibility(View.VISIBLE);
-        }else {
-            binding.txtThongBao.setVisibility(View.GONE);
+    private void checkThongBao() {//hàm kiểm tra
+        if (tripArrayList.size()==0){ //Nếu list không có dữ liệu
+            binding.txtThongBao.setVisibility(View.VISIBLE); //hiển thị text view thông báo
+        }else { //ngược lại list có dữ liệu
+            binding.txtThongBao.setVisibility(View.GONE); //ẩn text view thông báo
         }
     }
 
     private void initRecyler() {
-        adapter = new TripAdapter(this);
-        binding.recylerTrip.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.recylerTrip.setAdapter(adapter);
+        adapter = new TripAdapter(this);//khởi tạo adapter
+        binding.recylerTrip.setLayoutManager(new LinearLayoutManager(getContext()));//set recyclerview hiển thị theo chiều dọc
+        binding.recylerTrip.setAdapter(adapter); //set adapter để hiển thị lên recyclerview
     }
 
     @Override
     public int getCount() {
         return tripArrayList.size();
-    }
+    } //trả về số lượng của list
 
     @Override
-    public Trip getListTrip(int position) {
+    public Trip getListTrip(int position) {//lấy dữ liệu của list theo vị trí
         return tripArrayList.get(position);
     }
 
     @Override
-    public void onClickItem(int position) {
-        Trip trip = tripArrayList.get(position);
-        Intent intent = new Intent(getContext(), EditTripActivity.class);
-        intent.putExtra("trip",trip);
-        startActivity(intent);
+    public void onClickItem(int position) {//xử lý khi người dùng click vào dữ liệu trên recyclerview
+        Trip trip = tripArrayList.get(position); //khởi tạo class trip tại vị trí khi người dùng click
+        Intent intent = new Intent(getContext(), EditTripActivity.class);//khởi tạo intent chuyển từ FragmentTrip sang EditTripActivity
+        intent.putExtra("trip",trip); //truyền dữ liệu vào intent
+        startActivity(intent); //intent đc bắt đầu chạy
     }
 }

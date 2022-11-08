@@ -10,9 +10,9 @@ public class Trip implements Serializable {
     private String RequiredTrip;
     private String description;
 
-    public Trip() {
+    public Trip() { //Khởi tạo không tham số
     }
-
+    //Khởi tạo có tham số
     public Trip(int idTrip, String nameTrip, String dateTrip, String locateTrip, String requiredTrip,String description) {
         this.idTrip = idTrip;
         this.nameTrip = nameTrip;
