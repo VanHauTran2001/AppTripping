@@ -3,7 +3,9 @@ package com.example.apptrip.Fragment;
 import android.app.Dialog;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +32,7 @@ public class FragmentSearch extends Fragment implements TripAdapter.IListTrip{
     private FragmentSearchBinding binding;
     private SQLiteHelper sqLiteHelper;
     private ArrayList<Trip> tripArrayList;
+    private ArrayList<Trip> filterArrayList;
     private TripAdapter adapter;
     @Nullable
     @Override
@@ -37,7 +40,9 @@ public class FragmentSearch extends Fragment implements TripAdapter.IListTrip{
         binding = FragmentSearchBinding.inflate(inflater,container,false); //khởi tạo layout của fragment
         sqLiteHelper = new SQLiteHelper(getContext(),"Database.sqlite",null,1);//khởi tạo hàm gọi đến qlite
         tripArrayList = new ArrayList<>();//khởi tạo list
+        filterArrayList = new ArrayList<>(); //Khoi tao list
         CustumSearch();//xử lý sự kiện button search
+//        intitDataRecylerView();
         return binding.getRoot();
     }
 
@@ -57,7 +62,7 @@ public class FragmentSearch extends Fragment implements TripAdapter.IListTrip{
                 }else {//ngược lại
                     //add to database
                     tripArrayList.clear();//xóa dữ liệu trong list
-                    Cursor cursor = sqLiteHelper.getData("SELECT * FROM Trips WHERE NameTrip = '"+nameSearch+ "' ");//hiển thị dữ liệu bảng Trip theo Id
+                    Cursor cursor = sqLiteHelper.getData("SELECT * FROM Trips WHERE NameTrip  LIKE '%" +nameSearch+ "%' ");//hiển thị dữ liệu bảng Trip theo name trip
                     while (cursor.moveToNext()){
                         int idTrip = cursor.getInt(0);//lấy dữ liệu theo từng cột
                         String name = cursor.getString(1);
@@ -73,6 +78,7 @@ public class FragmentSearch extends Fragment implements TripAdapter.IListTrip{
         });
     }
 
+
     @Override
     public int getCount() {
         return tripArrayList.size();
@@ -86,5 +92,11 @@ public class FragmentSearch extends Fragment implements TripAdapter.IListTrip{
     @Override
     public void onClickItem(int position) {
 
+    }
+
+    @Override
+    public void onResume() {
+        intitDataRecylerView();
+        super.onResume();
     }
 }
